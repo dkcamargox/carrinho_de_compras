@@ -62,7 +62,13 @@ def quantity_menu():
     while(1):
         print('\t\tINSIRA A QUANTIDADE:')
         try:
-            return int(input('\t\tQUANTIDADE:\t'))
+            quantity = int(input('\t\tQUANTIDADE:\t'))
+            if quantity > 0:
+                return quantity
+            else:
+                input('POR FAVOR INSERIR UM VALOR VÁLIDO')
+                os.system('cls')
+                continue
         except:
             input('POR FAVOR INSERIR UM VALOR VÁLIDO')
             os.system('cls')
