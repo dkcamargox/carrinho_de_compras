@@ -1,3 +1,4 @@
+import enum
 import os
 
 PRODUCT_LIST = []
@@ -7,6 +8,8 @@ TOTAL_VALUE = 0.0
 
 
 CSV_FILE = 'data.csv'
+
+PRODUCT_CODES = []
 
 # carrega os produtos de dentro do arquivo
 def load_products_data():
@@ -32,7 +35,11 @@ def load_products_data():
                 f'{lines[0][1]}': f'{line[1]}',
                 f'{lines[0][2]}': f'{line[2]}'
             })
-    return products
+        codes = []
+        for index, product in enumerate(products):
+            codes.append(int(product['code']))
+
+    return (products, codes)
 
 
 # escreve continuar ou finalizar e le o resultado
@@ -50,6 +57,7 @@ def search_product(product_code):
             return product
 
 
+# escreve o menu para perguntar a quantidade
 def quantity_menu():
     while(1):
         print('\t\tINSIRA A QUANTIDADE:')
@@ -62,7 +70,6 @@ def quantity_menu():
 
 # faz a compra do produto e pergunta continuar ou terminar
 def buy(product_code):
-    
     global TOTAL_VALUE
     TOTAL_VALUE = TOTAL_VALUE + (float(search_product(product_code)['price']) * quantity_menu())
     os.system('cls')
@@ -92,7 +99,7 @@ def print_product_list():
 
 # lida com a inserção do menu de produtos
 def print_product_list_menu():
-    # TODO
+    global PRODUCT_CODES
     while(1):
         choice = print_product_list()
         try:
@@ -102,13 +109,18 @@ def print_product_list_menu():
             os.system('cls')
             continue
         if choice != 0:
-            os.system('cls')
-            continue_buying = buy(choice)
-            os.system('cls')
-            if(continue_buying):
-                continue
+            if choice in PRODUCT_CODES:
+                os.system('cls')
+                continue_buying = buy(choice)
+                os.system('cls')
+                if(continue_buying):
+                    continue
+                else:
+                    return os.system('cls')
             else:
-                return os.system('cls')
+                input('POR FAVOR INSERIR UM VALOR VÁLIDO')
+                os.system('cls')
+                continue
         elif choice == 0:
             return os.system('cls')
 
@@ -148,7 +160,7 @@ def main():
 
 
 if __name__ == '__main__':
-    PRODUCT_LIST = load_products_data()
+    PRODUCT_LIST, PRODUCT_CODES = load_products_data()
     os.system('cls')
     main()
     os.system('cls')
