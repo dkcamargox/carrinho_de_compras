@@ -50,10 +50,22 @@ def search_product(product_code):
             return product
 
 
+def quantity_menu():
+    while(1):
+        print('\t\tINSIRA A QUANTIDADE:')
+        try:
+            return int(input('\t\tQUANTIDADE:\t'))
+        except:
+            input('POR FAVOR INSERIR UM VALOR VÁLIDO')
+            os.system('cls')
+            continue
+
 # faz a compra do produto e pergunta continuar ou terminar
 def buy(product_code):
+    
     global TOTAL_VALUE
-    TOTAL_VALUE = TOTAL_VALUE + float(search_product(product_code)['price'])
+    TOTAL_VALUE = TOTAL_VALUE + (float(search_product(product_code)['price']) * quantity_menu())
+    os.system('cls')
     while(1):
         choice = print_buy_menu()
         if(choice.upper() == 'C'):
