@@ -5,13 +5,34 @@ PRODUCT_LIST = []
 
 TOTAL_VALUE = 0.0
 
+
+CSV_FILE = 'data.csv'
+
 # carrega os produtos de dentro do arquivo
 def load_products_data():
-    return [
-        { 'description':'BONECA', 'price':'300', 'code':'1'},
-        { 'description':'CARRINHO', 'price':'500', 'code':'2'},
-        { 'description':'BOLA', 'price':'200', 'code':'3'}
-    ]
+    global CSV_FILE
+    products = []
+    with open(CSV_FILE, 'r') as file:
+        lines = []
+        for line in file:
+                data = line.split(',')
+                # busca pelo \n para apagarlo
+                for index, string in enumerate(data):
+                    if '\n' in string:
+                        data[index] = string[:len(string)-1]
+                # cada linda do csv num vetor
+                lines.append(data)
+        # bota tudo num array de dict
+        for index, line in enumerate(lines):
+            if index == 0:
+                continue
+            
+            products.append({
+                f'{lines[0][0]}': f'{line[0]}',
+                f'{lines[0][1]}': f'{line[1]}',
+                f'{lines[0][2]}': f'{line[2]}'
+            })
+    return products
 
 
 # escreve continuar ou finalizar e le o resultado
