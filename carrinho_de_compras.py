@@ -15,7 +15,7 @@ def load_products_data():
     with open(CSV_FILE, 'r') as file:
         lines = []
         for line in file:
-                data = line.split(',')
+                data = line.split(';')
                 # busca pelo \n para apagarlo
                 for index, string in enumerate(data):
                     if '\n' in string:

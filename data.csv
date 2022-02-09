@@ -1,4 +1,5 @@
-code,description,price
-1,BONECA,300
-2,CARRINHO,500
-3,BOLA,200
+code;description;price
+1;BONECA;300
+2;CARRINHO;500
+3;BOLA;200
+4;CARREGADOR;20
